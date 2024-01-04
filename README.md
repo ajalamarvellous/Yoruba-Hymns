@@ -1,0 +1,1 @@
+## A Yoruba Hymns generator project for AfricaNLP workshop 2024
