@@ -1,5 +1,7 @@
+import yaml
 import requests
 import logging
+from pathlib import Path
 
 logging.basicConfig(
     format= "%(asctime)s [%(levelname)s] \
@@ -8,6 +10,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger()
 
+# get configurations from config.yml
+config_file_path = Path(__file__).parents[2]/ "config.yml"
+with open(config_file_path) as config_file:
+    configurations = yaml.safe_load(config_file)
 
 def get_page(url: str):
     """Gets the url page requested for"""
@@ -21,5 +27,5 @@ def get_page(url: str):
     return page
 
 if __name__ == "__main__":
-    page = get_page(url)
+    page = get_page(configurations["url"])
     print(page.content)
