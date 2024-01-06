@@ -1,6 +1,7 @@
 import yaml
 import requests
 import logging
+import tempfile
 from pathlib import Path
 
 logging.basicConfig(
@@ -17,7 +18,6 @@ with open(config_file_path) as config_file:
 
 def get_page(url: str):
     """Gets the url page requested for"""
-
     page = ""
     try:
         page = requests.get(url, verify=False)
@@ -26,6 +26,15 @@ def get_page(url: str):
         logging.error(f"An error occured: {err}")
     return page
 
+def save_file(web_page: str):
+    """Create a temp file to save the content retrieved from the internet"""
+
+    file = tempfile.NamedTemporaryFile("w+", delete=False)
+    file.write(web_page)
+    file.seek(0)
+    return file
+
 if __name__ == "__main__":
     page = get_page(configurations["url"])
-    print(page.content)
+    file = save_file(page.text)
+    print(file.name)
