@@ -1,4 +1,13 @@
 import requests
+import logging
+
+logging.basicConfig(
+    format= "%(asctime)s [%(levelname)s] \
+				%(funcName)s: %(message)s",
+    level=logging.DEBUG,
+)
+logger = logging.getLogger()
+
 
 def get_page(url: str):
     """Gets the url page requested for"""
@@ -6,8 +15,9 @@ def get_page(url: str):
     page = ""
     try:
         page = requests.get(url, verify=False)
-    except Exception as err:
-        print(f"An error occured: {err}")
+        logger.info(f"{url} retreived successfully")
+    except HTTPError as err:
+        logging.error(f"An error occured: {err}")
     return page
 
 if __name__ == "__main__":
