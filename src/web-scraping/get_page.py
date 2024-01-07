@@ -22,8 +22,14 @@ def get_page(url: str):
     try:
         page = requests.get(url, verify=False)
         logger.info(f"{url} retreived successfully")
-    except HTTPError as err:
-        logging.error(f"An error occured: {err}")
+    except requests.ConnectionError as err:
+        logger.error(f"A connection Error occured: {err}")
+    except requests.HTTPError as err:
+        logger.error(f"An HTTP error occured: {err}")
+    except requests.Timeout:
+        logger.error(f"Connection timed out")
+    except requests.RequestException as err:
+        logger.error(f"An unknown error occured: {err}")
     return page
 
 def save_file(web_page: str):
