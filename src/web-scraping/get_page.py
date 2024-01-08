@@ -3,9 +3,12 @@ import csv
 import requests
 import logging
 import tempfile
+import warnings
 from pathlib import Path
 
 from bs4 import BeautifulSoup
+
+warnings.filterwarnings("ignore")
 
 logging.basicConfig(
     format= "%(asctime)s [%(levelname)s] \
