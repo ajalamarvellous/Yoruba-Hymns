@@ -1,4 +1,5 @@
 import yaml
+import csv
 import requests
 import logging
 import tempfile
@@ -58,6 +59,13 @@ def extract_info(page: str):
     next_link = soup.select(".elementor-post-navigation__next.elementor-post-navigation__link a")
     prev_link = soup.select(".elementor-post-navigation__prev.elementor-post-navigation__link a")[0]["href"]
     print(f"The new links to crawl {next_link[0].get("href"), prev_link}")
+
+
+def create_csv(file_address: str):
+    """Create a csv file to save the hymns content into"""
+    file = open(file_address, "w+")
+    csv_writer = csv.writer(file)
+    return file, csv_writer
 
 
 if __name__ == "__main__":
