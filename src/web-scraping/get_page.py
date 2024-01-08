@@ -46,7 +46,7 @@ def save_file(web_page: str):
     return file
 
 
-def extract_info(page: str):
+def extract_info(page: str, csv_writer: object):
     """Extracts and returns the desired information only"""
     # define soup object
     soup = BeautifulSoup(page, "html.parser")
@@ -54,7 +54,18 @@ def extract_info(page: str):
     print(f"Page title: {soup.title}")
     # get the content of the page
     content = soup.select(".elementor-widget-container p")
-    print(f"Page content {content} \n\n")
+    # recontruct the content
+    content_n = ""
+    for i, p in enumerate(content):
+        # check if the content of the p tag selected is between the second and
+        # third to the last. This is because the first and last two values are 
+        # redundant values that do not include the hymns we want 
+        if (i > 0) and (i < len(content) - 2):
+            content_n += f"{p} "
+    print(f"Page content {content_n} \n\n")
+
+    # save the content to a csv file
+    csv_writer.writerow([soup.title, content_n])
     # get links to new pages to crawl also
     next_link = soup.select(".elementor-post-navigation__next.elementor-post-navigation__link a")
     prev_link = soup.select(".elementor-post-navigation__prev.elementor-post-navigation__link a")[0]["href"]
@@ -65,11 +76,13 @@ def create_csv(file_address: str):
     """Create a csv file to save the hymns content into"""
     file = open(file_address, "w+")
     csv_writer = csv.writer(file)
+    logger.info("File and csv_writer created successfully")
     return file, csv_writer
 
 
 if __name__ == "__main__":
     page = get_page(configurations["url"])
-    file = save_file(page.text)
-    extract_info(page.content)
+    file, csv_writer = create_csv(configurations["hymn_file"])
+    # file = save_file(page.text)
+    extract_info(page.content, csv_writer)
     print(file.name)
