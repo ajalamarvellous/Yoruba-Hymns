@@ -34,3 +34,13 @@ def format_title(title: str) -> str:
     word = title.split("-")[0]
     word = word.replace("<title>", "")
     return word
+
+
+def format_hymn(hymn: str) -> str:
+    """
+    Format hymn and remove all HTML tags in it
+    """
+    hymn = hymn.replace("<p>", "")
+    hymn = hymn.replace("</p>", "")
+    hymn = hymn.replace("br/>", " ")
+    return hymn
