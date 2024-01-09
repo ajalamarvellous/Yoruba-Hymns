@@ -25,3 +25,12 @@ def read_file(file_address: str) -> pd.DataFrame:
     df = pd.read_csv(file_address, names=['Title', 'Hymn'])
     logger.info("Dataframe read successfully...")
     return df
+
+
+def format_title(title: str) -> str:
+    """
+    Clean and format the title column
+    """ 
+    word = title.split("-")[0]
+    word = word.replace("<title>", "")
+    return word
