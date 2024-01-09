@@ -42,9 +42,23 @@ def format_hymn(hymn: str) -> str:
     """
     hymn = hymn.replace("<p>", "")
     hymn = hymn.replace("</p>", "")
-    hymn = hymn.replace("br/>", " ")
+    hymn = hymn.replace("<br/>", " ")
     return hymn
 
-def save_file(df: pd.DataFrame, file_destination: str):
-    df.to_csv(file_destination, index_col=False)
+def save_file(df: pd.DataFrame, file_destination: str) -> None:
+    df.to_csv(file_destination, index=False)
     logger.info(f"File saved successfully to {file_destination}")
+    return None
+
+
+def main():
+    df = read_file(configurations["hymn_file"])
+    df["Title"] = df["Title"].apply(format_title)
+    logger.info("Title formated successfully...")
+    df["Hymn"] = df["Hymn"].apply(format_hymn)
+    logger.info("Hymn formated successfully...")
+    save_file(df, configurations["processed_file"])
+    return None
+
+if __name__ == "__main__":
+    main()
