@@ -44,3 +44,7 @@ def format_hymn(hymn: str) -> str:
     hymn = hymn.replace("</p>", "")
     hymn = hymn.replace("br/>", " ")
     return hymn
+
+def save_file(df: pd.DataFrame, file_destination: str):
+    df.to_csv(file_destination, index_col=False)
+    logger.info(f"File saved successfully to {file_destination}")
