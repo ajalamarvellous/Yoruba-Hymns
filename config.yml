@@ -1,2 +1,3 @@
 url : 'https://yorubabaptisthymns.com/hymn/253/'
-hymn_file : "data/Yoruba_hymns3.csv"
+hymn_file : "data/Yoruba_hymns.csv"
+processed_file: "data/Yoruba_hymns_processed.csv"
